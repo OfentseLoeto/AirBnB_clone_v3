@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 
