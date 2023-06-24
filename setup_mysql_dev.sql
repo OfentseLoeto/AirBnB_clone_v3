@@ -1,34 +1,35 @@
 #!/usr/bin/python3
-
 import MySQLdb
 
-'''Connect to the MySQL server as'''
+def prepare_mysql_server():
+    # Connect to the MySQL server
+    db = MySQLdb.connect(
+        host='localhost',
+        port=3306,
+        user='root',
+        passwd='root'
+    )
 
-conn = MySQLdb.connect(host='localhost', user="hbnb_test", passwd="hbnb_test_pwd")
+    # Create the database hbnb_dev_db if it doesn't exist
+    cursor = db.cursor()
+    cursor.execute("CREATE DATABASE IF NOT EXISTS hbnb_dev_db")
 
-'''Create a cursor object to execute SQL queries'''
-cursor = conn.cursor()
+    # Create the user hbnb_dev if it doesn't exist
+    cursor.execute("CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd'")
 
-'''Create the hbnb_test_db database if it doesnt exist'''
-db_query = "CREATE DATABASE IF NOT EXISTS hbnb_test_db"
-cursor.execute(db_query)
+    # Grant all privileges on hbnb_dev_db to hbnb_dev
+    cursor.execute("GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_dev'@'localhost'")
 
-'''Create the hbnb_test user with the specified password'''
-user_query = "CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_passwd'"
-cursor.execute(user_query)
+    # Grant SELECT privilege on performance_schema to hbnb_dev
+    cursor.execute("GRANT SELECT ON performance_schema.* TO 'hbnb_dev'@'localhost'")
 
-'''Grant all privileges to hbnb_test on the hbnb_test_db database'''
-grant_privileges = "GRANT ALL PRIVILEGES ON hbnb_test_db.* TO 'hbnb_test'@'localhost'"
-cursor.execute(grant_privileges)
+    # Flush privileges to apply the changes
+    cursor.execute("FLUSH PRIVILEGES")
 
-'''Grant select on performance_schema'''
-grant_select = "GRANT SELECT ON performance_schema.* TO 'hbnb_test'@'localhost'"
-cursor.execute(grant_select)
+    # Close the cursor and database connection
+    cursor.close()
+    db.close()
 
-'''Flush privileges to apply the changes'''
-flush_query = "FLUSH PRIVILEGES"
-cursor.execute(flush_query)
+if __name__ == '__main__':
+    prepare_mysql_server()
 
-'''Close the cursor and database connection'''
-cursor.close()
-conn.close()
