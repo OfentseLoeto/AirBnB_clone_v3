@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-
 """File Storage Module"""
 import json
-
 
 class FileStorage:
     """File Storage Class"""
@@ -51,5 +49,26 @@ class FileStorage:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             if key in self.__objects:
                 del self.__objects[key]
-                self.save()
+                self.save()                
 
+
+class FileStorage(BaseModel):
+    """This method retrieve one object and returns the object
+       based on the class and its ID, or None if not found
+    """
+
+    def get(self, cls, id):
+        """Retrieve one object by class and Id
+        """
+
+        all_objs = self.all(cls)
+        for obj_id, obj in all_objs.items():
+            if obj_id == id:
+                return obj
+            return None
+
+    def count(self, cls=None):
+        """Count the number of objects in storage matching the given class"""
+
+        all_objs = self.all(cls)
+        return len(all_objs)

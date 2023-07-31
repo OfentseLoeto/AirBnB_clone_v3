@@ -51,4 +51,22 @@ class DBStorage:
             bind=self.__engine, expire_on_commit=False))
         self.__session = Session()
 
+class DBStorage(BaseModel):
+    """This method retrive one oblect and returns objects based
+       on the class and its id, or None if not found.
+    """
 
+    def get(self, cls, id):
+        """Retrieve one object by class and ID"""
+        
+        all_objs = self.all(cls)
+        for obj_id , obj in all_objs.items():
+            if obj_id == id:
+                return obj
+            return None
+
+    def count(self, cls=None):
+        """Count the number of objects in storage matching the given class"""
+
+        all_objs = self.all(cls)
+        return len(all_objs)
