@@ -17,5 +17,5 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing when an empty line + ENTER is given"""
         pass
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     HBNBCommand().cmdloop()
