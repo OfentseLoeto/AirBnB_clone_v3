@@ -51,7 +51,6 @@ class FileStorage:
                 del self.__objects[key]
                 self.save()                
 
-
 class FileStorage(BaseModel):
     """This method retrieve one object and returns the object
        based on the class and its ID, or None if not found
