@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """File Storage Module"""
 import json
+from models.base_model import BaseModel
 
 class FileStorage:
     """File Storage Class"""
