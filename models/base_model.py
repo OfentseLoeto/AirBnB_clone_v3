@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+import os
+import models
+from os import getenv
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid

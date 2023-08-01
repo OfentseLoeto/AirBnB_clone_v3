@@ -1,4 +1,5 @@
 #!/usr/bin/pyhton3
+"""This script creates the database"""
 
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, table
@@ -15,7 +16,9 @@ if getenv("HBNB_TYPE_STORAGE") == "db":
                                  ForeignKey('amenities.id'),
                                  primary_key=True, nullable=False))
 
+
 class Place(BaseModel, Base):
+
     __tablename__ = 'places'
 
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
@@ -29,32 +32,34 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
 
-    reviews = relationship('Review', backref='place',
-                               cascade='all, delete-orphan')
-        amenities = relationship('Amenity', secondary=place_amenity,
-                                 backref='places', viewonly=False)
+    reviews = relationship('Review', backref='place', cascade='all, delete-orphan')
+    amenities = relationship('Amenity', secondary=place_amenity, 
+            backref='places', viewonly=False)
 
+    def reviews(self):
+        """
+        getter attribute that returns the list of Review instances
+        with place_id equals to the current Place.id
+        """
 
+        from models import storage
+        reviews_dict = storage.all(Review)
+        reviews_list = []
 
-
-        def reviews(self):
-            """getter attribute that returns the list of Review instances
-            with place_id equals to the current Place.id"""
-            from models import storage
-            reviews_dict = storage.all(Review)
-            reviews_list = []
             for review in reviews_dict.values():
+
                 if review.place_id == self.id:
                     reviews_list.append(review)
-            return reviews_list
+                    return reviews_list
 
-        if getenv("HBNB_TYPE_STORAGE") == "db":
-    class Amenity(BaseModel, Base):
-        __tablename__ = 'amenities'
-        name = Column(String(128), nullable=False)
-        place_amenities = relationship('Place', secondary='place_amenity',
-                                        backref='amenities')
+                if getenv("HBNB_TYPE_STORAGE") == "db":
 
+class Amenity(BaseModel, Base):
+
+    __tablename__ = 'amenities'
+    name = Column(String(128), nullable=False)
+    place_amenities = relationship('Place', secondary='place_amenity', 
+            backref='amenities')
 else:
     class Amenity(BaseModel):
         name = Column(String(128), nullable=False)
