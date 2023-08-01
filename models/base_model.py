@@ -9,7 +9,9 @@ from datetime import datetime
 Base = declarative_base()
 
 class BaseModel:
-    id = Column(String(60), primary_key=True, nullable=False, unique=True, default=str(uuid.uuid4()))
+
+    id = Column(String(60), primary_key=True, 
+            nullable=False, unique=True, default=str(uuid.uuid4()))
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
