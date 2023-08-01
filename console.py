@@ -1,7 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import cmd
 
+
 class HBNBCommand(cmd.Cmd):
+    intro = "Welcome to the HBNB command interpreter. Type 'help' to list available commands or 'quit' to exit."
     prompt = "(hbnb) "
 
     def do_quit(self, arg):
@@ -9,13 +11,8 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, arg):
-        """Exit the program gracefully on EOF (Ctrl+D)"""
-        print()  # New line before exiting
+        """Exit the program when EOF (Ctrl+D) is interpreted"""
         return True
-
-    def emptyline(self):
-        """Do nothing when an empty line + ENTER is given"""
-        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
