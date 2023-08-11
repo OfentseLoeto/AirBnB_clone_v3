@@ -6,9 +6,9 @@ Script that distributes an archive to your web servers
 from fabric.api import env, put, run
 import os
 
-env.hosts = [52.3.220.1 , 52.91.124.243]
+env.hosts = [54.226.23.119 , 54.226.23.119]
 env.user = 'ubuntu'
-env.key_filename = '<path_to_ssh_key>'
+env.key_filename = '</home/ofentse/rsa.pub>'
 
 def do_deploy(archive_path):
     '''

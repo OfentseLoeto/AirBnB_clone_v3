@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+
 import os
+from models.base_model import BaseModel, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
@@ -52,3 +54,6 @@ class DBStorage:
         self.__session = Session()
 
 
+    def close(self):
+        """Closes the current session."""
+        self.__session.close()

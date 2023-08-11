@@ -44,4 +44,3 @@ class BaseModel:
         dictionary['created_at'] = dictionary['created_at'].isoformat()
         dictionary['updated_at'] = dictionary['updated_at'].isoformat()
         return dictionary
-

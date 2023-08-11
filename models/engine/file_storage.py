@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 """File Storage Module"""
+from models.base_model import BaseModel
 import json
 
 
@@ -53,3 +54,6 @@ class FileStorage:
                 del self.__objects[key]
                 self.save()
 
+    def close(self):
+        """Deserializes the JSON file to objects and reloads the data."""
+        self.reload()
